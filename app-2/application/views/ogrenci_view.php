@@ -2,105 +2,101 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Öğrenci Not Sistemi</title>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-
     <style>
         body {
-            background: #f5f5f5;
+            font-family: Arial, sans-serif;
+            background:#f3f3f3;
+            margin:0;
+            padding:0;
+            display:flex;
+            justify-content:center;
+            align-items:flex-start;
+            min-height:100vh;
         }
         .container {
-            margin-top: 40px;
+            background:white;
+            width:90%;
+            max-width:900px;
+            margin-top:40px;
+            padding:25px;
+            border-radius:12px;
+            box-shadow:0 4px 15px rgba(0,0,0,0.1);
         }
-        .card {
-            border-radius: 10px;
+        h2 {
+            text-align:center;
+            margin-bottom:20px;
+        }
+        form {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:15px;
+            margin-bottom:30px;
+        }
+        input, select {
+            padding:10px;
+            border:1px solid #ccc;
+            border-radius:6px;
+            width:100%;
+        }
+        button {
+            grid-column:span 2;
+            padding:12px;
+            border:none;
+            background:#007bff;
+            color:white;
+            border-radius:6px;
+            cursor:pointer;
+            font-size:16px;
         }
         table {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
+            width:100%;
+            border-collapse:collapse;
         }
-        th {
-            background: #0d6efd;
-            color: white;
+        table th, table td {
+            border:1px solid #ddd;
+            padding:10px;
+            text-align:center;
+        }
+        table th {
+            background:#007bff;
+            color:white;
         }
     </style>
 </head>
-
 <body>
-
 <div class="container">
+    <h2>Öğrenci Not Hesaplama</h2>
 
-    <div class="card shadow p-4 mb-5">
-        <h3 class="text-center mb-4">Öğrenci Not Hesaplama</h3>
+    <form method="post" action="">
+        <input type="text" name="ogrenci_adi" placeholder="Öğrenci Adı" required>
+        <input type="text" name="ders_adi" placeholder="Ders Adı" required>
+        <input type="number" name="vize" placeholder="Vize Notu" required>
+        <input type="number" name="final" placeholder="Final Notu" required>
 
-        <form method="post">
+        <button type="submit">Kaydet</button>
+    </form>
 
-            <div class="mb-3">
-                <label class="form-label">Öğrenci Adı</label>
-                <input type="text" class="form-control" name="ogrenci_adi" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Ders Seçiniz</label>
-                <select name="ders_adi" class="form-select" required>
-                    <option value="">Ders Seç</option>
-                    <option>Matematik</option>
-                    <option>Fizik</option>
-                    <option>Kimya</option>
-                    <option>Biyoloji</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Vize (%40)</label>
-                <input type="number" class="form-control" name="vize" min="0" max="100" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Final (%60)</label>
-                <input type="number" class="form-control" name="final" min="0" max="100" required>
-            </div>
-
-            <button class="btn btn-primary w-100">Kaydet</button>
-
-        </form>
-    </div>
-
-    <h4 class="mb-3">Kayıtlı Öğrenciler</h4>
-
-    <table class="table table-bordered table-striped shadow">
+    <h3>Öğrenci Listesi</h3>
+    <table>
         <tr>
-            <th>ID</th>
-            <th>Öğrenci Adı</th>
+            <th>Ad</th>
             <th>Ders</th>
             <th>Vize</th>
             <th>Final</th>
             <th>Geçme Notu</th>
         </tr>
-
-        <?php if (!empty($liste)): ?>
-            <?php foreach ($liste as $row): ?>
-                <tr>
-                    <td><?= $row->id ?></td>
-                    <td><?= $row->ogrenci_adi ?></td>
-                    <td><?= $row->ders_adi ?></td>
-                    <td><?= $row->vize ?></td>
-                    <td><?= $row->final ?></td>
-                    <td><b><?= $row->gecme_notu ?></b></td>
-                </tr>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="6" class="text-center text-muted">Henüz kayıt yok.</td>
-            </tr>
-        <?php endif; ?>
-
+        <?php if (!empty($liste)) foreach ($liste as $row): ?>
+        <tr>
+            <td><?= $row->ogrenci_adi ?></td>
+            <td><?= $row->ders_adi ?></td>
+            <td><?= $row->vize ?></td>
+            <td><?= $row->final ?></td>
+            <td><?= $row->gecme_notu ?></td>
+        </tr>
+        <?php endforeach; ?>
     </table>
 </div>
-
-
 </body>
 </html>
